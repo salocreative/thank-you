@@ -1,19 +1,23 @@
 ---
 interface Props {
+  presenters: string;
   videoUrl: string | null;
+  placeholderText?: string | null;
 }
 
-const { videoUrl } = Astro.props;
+const { presenters, videoUrl, placeholderText = 'Message coming shortly' } = Astro.props;
+const sectionLabel = `A message from ${presenters}`;
+const iframeTitle = `A message from ${presenters}`;
 ---
 
 <div class="team-video">
-  <div class="section-label">A message from Carl &amp; Toby</div>
+  <div class="section-label">{sectionLabel}</div>
   <div class="video-wrapper">
     {videoUrl ? (
       <iframe
         src={`https://player.vimeo.com/video/${videoUrl}?badge=0&autopause=0`}
         allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
-        title="A message from Carl and Toby"
+        title={iframeTitle}
       />
     ) : (
       <div class="video-placeholder">
@@ -22,8 +26,8 @@ const { videoUrl } = Astro.props;
             <path d="M6 4.5L13.5 9L6 13.5V4.5Z" fill="#A16BFF"/>
           </svg>
         </div>
-        <div class="placeholder-names">Carl &amp; Toby</div>
-        <div class="placeholder-sub">Message coming shortly</div>
+        <div class="placeholder-names">{presenters}</div>
+        <div class="placeholder-sub">{placeholderText}</div>
       </div>
     )}
   </div>

@@ -7,9 +7,12 @@ import ActionCards from '../components/ActionCards.astro';
 import TestimonialVideo from '../components/TestimonialVideo.astro';
 import UpsellBlock from '../components/UpsellBlock.astro';
 import Footer from '../components/Footer.astro';
-import { clients, type Client } from '../data/clients';
+import { getClients } from '../lib/getClients';
+import { hasTeamVideo, type Client } from '../data/clients';
 
-export function getStaticPaths() {
+export async function getStaticPaths() {
+  const clients = await getClients();
+
   return Object.values(clients).map((client) => ({
     params: { client: client.slug },
     props: { client },
@@ -40,7 +43,13 @@ const paragraphs = Array.isArray(client.personalMessage)
     </div>
   </div>
 
-  <TeamVideo videoUrl={client.teamVideoUrl} />
+  {hasTeamVideo(client) && (
+    <TeamVideo
+      presenters={client.teamVideoPresenters ?? 'the Salo team'}
+      videoUrl={client.teamVideoUrl}
+      placeholderText={client.teamVideoPlaceholderText}
+    />
+  )}
   <ReferralNote />
   <ActionCards referralDescription={client.referralActionDescription} />
 

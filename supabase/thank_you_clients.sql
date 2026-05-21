@@ -22,8 +22,14 @@ create table if not exists public.thank_you_clients (
       )
     ),
 
-  -- Vimeo video ID only (not full URL); null shows the team video placeholder
+  -- Vimeo video ID only (not full URL); null with presenters set shows placeholder
   team_video_url text,
+
+  -- Who the team video is from, e.g. "Carl & Toby". Null hides the section entirely.
+  team_video_presenters text,
+
+  -- Subtext when video is not ready yet (optional)
+  team_video_placeholder_text text,
 
   show_upsell boolean not null default true,
 
@@ -66,7 +72,9 @@ insert into public.thank_you_clients (
   recipient_names,
   project_description,
   personal_message,
+  team_video_presenters,
   team_video_url,
+  team_video_placeholder_text,
   show_upsell,
   referral_action_description,
   upsell_heading,
@@ -83,7 +91,9 @@ insert into public.thank_you_clients (
     'Thank you for trusting us with it, for being great to work with, and for giving us the room to do our best work. That combination is rarer than it should be.',
     'We''ve put together a short message below. And if you have a few minutes, there are a couple of ways you can help us reach more clients like you.'
   ),
+  'Carl & Toby',
   null,
+  'Message coming shortly',
   true,
   'If you know a brand or business that needs proper design thinking applied, we would love an introduction. Even a LinkedIn message is enough to get a conversation started.',
   'Need ongoing design support? Flexi-Design has you covered.',

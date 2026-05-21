@@ -78,23 +78,51 @@ The site is configured with `base: '/thank-you'` in `astro.config.mjs` for proje
 
 ## Adding a personalised client page
 
-1. Add an entry to `src/data/clients.ts`:
+Pages are managed in the **admin portal** (Supabase `thank_you_clients` table). The site is static — each page is generated at **build time**, not on every visit.
 
-   ```ts
-   acme: {
-     slug: 'acme',
-     clientName: 'Acme Ltd',
-     recipientNames: 'Jane',
-     projectDescription: 'Brand refresh',
-     personalMessage: ['Paragraph one.', 'Paragraph two.'],
-     teamVideoUrl: null,       // Vimeo ID when ready, e.g. '123456789'
-     showUpsell: true,
-   },
+### Workflow
+
+1. Create the page in the admin portal and set **Published** to on.
+2. Trigger a rebuild (push to `main`, or run **Actions → Deploy to GitHub Pages → Run workflow**).
+3. The page goes live at `/thank-you/{slug}` (e.g. `/thank-you/src`).
+
+If a page 404s, it usually means one of:
+
+- **Not published** — only rows with `published = true` are built.
+- **Site not rebuilt** — creating a row in Supabase does not update GitHub Pages until the next deploy.
+- **Supabase not wired in CI** — GitHub Actions needs `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY` secrets (see below).
+
+### Test locally
+
+1. Copy `.env.example` to `.env` and add your Supabase credentials.
+2. Build and preview:
+
+   ```bash
+   npm run build
+   npm run preview
    ```
 
-2. The page is generated at `/thank-you/acme` (or `/acme` on a custom domain).
+3. Open [http://localhost:4321/thank-you/src](http://localhost:4321/thank-you/src) (replace `src` with your slug).
 
-Optional fields for personalised copy: `referralActionDescription`, `upsellHeading`, `upsellDescription`, `upsellButtonText`.
+During `npm run dev`, Astro still pre-renders static paths at startup — restart the dev server after adding a new client.
+
+### Team video (optional)
+
+The team message block is **hidden** unless `team_video_presenters` or `team_video_url` is set in Supabase.
+
+| Field | Purpose |
+|-------|---------|
+| `team_video_presenters` | Names in the section label and placeholder, e.g. `Carl & Toby` |
+| `team_video_url` | Vimeo video ID — shows the player when set |
+| `team_video_placeholder_text` | Subtext when video is not ready (defaults to "Message coming shortly") |
+
+**Examples**
+
+- Presenters set, no URL → placeholder with names (Provenant)
+- Presenters + URL → embedded Vimeo player
+- Both null → section omitted entirely
+
+Run [`supabase/migrations/20260521_add_team_video_presenters.sql`](supabase/migrations/20260521_add_team_video_presenters.sql) on existing databases.
 
 ## Shared links
 
@@ -107,7 +135,24 @@ Update placeholder URLs in `src/data/site.ts`:
 
 SQL to create the `thank_you_clients` table is in [`supabase/thank_you_clients.sql`](supabase/thank_you_clients.sql).
 
-The table mirrors the TypeScript client schema and includes optional override columns for personalised upsell and referral copy. Wire your admin portal to CRUD this table; at build time you can export rows into `clients.ts` or fetch via a build script.
+At build time, [`src/lib/getClients.ts`](src/lib/getClients.ts) fetches all **published** rows from Supabase and generates static HTML for each slug.
+
+### GitHub Actions secrets
+
+In the repo **Settings → Secrets and variables → Actions**, add:
+
+| Secret | Value |
+|--------|--------|
+| `SUPABASE_URL` | Project URL from Supabase dashboard |
+| `SUPABASE_SERVICE_ROLE_KEY` | Service role key (Settings → API) |
+
+The service role key is only used during the build step in CI — it never ships to the browser.
+
+If you prefer the anon key instead, run [`supabase/policies.sql`](supabase/policies.sql) and use `SUPABASE_ANON_KEY` in place of the service role key.
+
+### Fallback data
+
+`src/data/clients.ts` is used when Supabase env vars are missing (e.g. offline dev). In production CI, Supabase is the source of truth.
 
 ## Sitemap
 

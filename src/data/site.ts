@@ -4,7 +4,7 @@ export const RIVERSIDE_LINK = 'RIVERSIDE_LINK_HERE';
 export const GOOGLE_REVIEW_LINK = 'GOOGLE_REVIEW_LINK_HERE';
 
 export const TESTIMONIALS_VIMEO_URL =
-  'https://player.vimeo.com/video/salocreative/testimonials?badge=0&autopause=0&player_id=0&app_id=58479';
+  'https://player.vimeo.com/video/1170350821?h=3dc29a7f08&badge=0&autopause=0&byline=0&portrait=0&title=0';
 
 export const DEFAULT_REFERRAL_ACTION_DESCRIPTION =
   'If you know an agency or brand that is struggling with design capacity, we would love an introduction. Even a LinkedIn message or a CC on an email is enough to get a conversation started.';
