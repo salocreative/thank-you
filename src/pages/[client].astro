@@ -1,0 +1,58 @@
+---
+import Base from '../layouts/Base.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import TeamVideo from '../components/TeamVideo.astro';
+import ReferralNote from '../components/ReferralNote.astro';
+import ActionCards from '../components/ActionCards.astro';
+import TestimonialVideo from '../components/TestimonialVideo.astro';
+import UpsellBlock from '../components/UpsellBlock.astro';
+import Footer from '../components/Footer.astro';
+import { clients, type Client } from '../data/clients';
+
+export function getStaticPaths() {
+  return Object.values(clients).map((client) => ({
+    params: { client: client.slug },
+    props: { client },
+  }));
+}
+
+interface Props {
+  client: Client;
+}
+
+const { client } = Astro.props;
+
+const paragraphs = Array.isArray(client.personalMessage)
+  ? client.personalMessage
+  : [client.personalMessage];
+---
+
+<Base title={`Thank you, ${client.clientName} — Salo`}>
+  <SiteHeader />
+
+  <div class="personal-message">
+    <div class="eyebrow">A personal note</div>
+    <h1>{client.recipientNames} — it's been<br>a real pleasure.</h1>
+    <div class="message-body">
+      {paragraphs.map((paragraph) => (
+        <p>{paragraph}</p>
+      ))}
+    </div>
+  </div>
+
+  <TeamVideo videoUrl={client.teamVideoUrl} />
+  <ReferralNote />
+  <ActionCards referralDescription={client.referralActionDescription} />
+
+  <hr class="divider" />
+
+  <TestimonialVideo />
+  {client.showUpsell && (
+    <UpsellBlock
+      heading={client.upsellHeading}
+      description={client.upsellDescription}
+      buttonText={client.upsellButtonText}
+    />
+  )}
+  <Footer />
+</Base>

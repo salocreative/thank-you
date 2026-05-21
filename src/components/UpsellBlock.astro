@@ -1,0 +1,56 @@
+---
+import { DEFAULT_UPSELL } from '../data/site';
+
+interface Props {
+  heading?: string;
+  description?: string;
+  buttonText?: string;
+}
+
+const {
+  heading = DEFAULT_UPSELL.heading,
+  description = DEFAULT_UPSELL.description,
+  buttonText = DEFAULT_UPSELL.buttonText,
+} = Astro.props;
+---
+
+<div class="upsell">
+  <div class="upsell-inner">
+    <div class="section-label">Keep the momentum going</div>
+    <h2>{heading}</h2>
+    <p>{description}</p>
+    <div class="packs">
+      <div class="pack">
+        <div class="pack-name">Essentials</div>
+        <div class="pack-credits">20 credits</div>
+        <div class="pack-price">£1,800 ex VAT</div>
+        <div class="pack-bonus">+ 2 bonus credits</div>
+      </div>
+      <div class="pack">
+        <div class="pack-name">Momentum</div>
+        <div class="pack-credits">40 credits</div>
+        <div class="pack-price">£3,420 ex VAT</div>
+        <div class="pack-bonus">+ 5 bonus credits</div>
+      </div>
+      <div class="pack">
+        <div class="pack-name">Scale</div>
+        <div class="pack-credits">60 credits</div>
+        <div class="pack-price">£4,860 ex VAT</div>
+        <div class="pack-bonus">+ 8 bonus credits</div>
+      </div>
+      <div class="pack">
+        <div class="pack-name">Ultimate</div>
+        <div class="pack-credits">80 credits</div>
+        <div class="pack-price">£6,120 ex VAT</div>
+        <div class="pack-bonus">+ 10 bonus credits</div>
+      </div>
+    </div>
+    <div class="upsell-actions">
+      <a href="mailto:hello@salo.uk?subject=Flexi-Design enquiry" class="btn-primary">
+        {buttonText}
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7H12M12 7L8 3M12 7L8 11" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <span class="upsell-note">Mention this page and we'll add your bonus credits automatically.</span>
+    </div>
+  </div>
+</div>

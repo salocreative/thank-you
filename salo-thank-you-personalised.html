@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thank you, Provenant — Salo</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fustat:wght@400;600;800&display=swap');
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --purple:          #6405FF;
+    --purple-light:    #8A42FF;
+    --purple-lighter:  #A16BFF;
+    --off-white:       #F5F2EE;
+    --near-black:      #0A0A0A;
+    --surface:         #141414;
+    --surface-2:       #1C1C1C;
+    --border:          rgba(255,255,255,0.08);
+    --border-em:       rgba(255,255,255,0.14);
+    --body-text:       rgba(245,242,238,0.65);
+    --muted:           rgba(245,242,238,0.32);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Fustat', sans-serif;
+    background: var(--near-black);
+    color: var(--off-white);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── GRID TEXTURE ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+    background-size: 80px 80px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── LAYOUT ── */
+  .page {
+    position: relative;
+    z-index: 1;
+    max-width: 740px;
+    margin: 0 auto;
+    padding: 56px 24px 96px;
+  }
+
+  /* ── HEADER ── */
+  .site-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 80px;
+    padding-bottom: 24px;
+    border-bottom: 0.5px solid var(--border);
+    opacity: 0;
+    animation: fadeUp 0.5s cubic-bezier(0.16,1,0.3,1) 0.05s forwards;
+  }
+  .site-header svg { width: 72px; height: auto; }
+  .header-link {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--muted);
+    text-decoration: none;
+    letter-spacing: 0.04em;
+    transition: color 200ms;
+  }
+  .header-link:hover { color: var(--off-white); }
+
+  /* ── PERSONAL MESSAGE ── */
+  .personal-message {
+    margin-bottom: 56px;
+    opacity: 0;
+    animation: fadeUp 0.5s cubic-bezier(0.16,1,0.3,1) 0.15s forwards;
+  }
+  .eyebrow {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--purple);
+    margin-bottom: 18px;
+  }
+  .personal-message h1 {
+    font-size: clamp(34px, 6vw, 54px);
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    line-height: 1.0;
+    color: var(--off-white);
+    margin-bottom: 26px;
+  }
+  .message-body {
+    font-size: 15px;
+    line-height: 1.75;
+    color: var(--body-text);
+    max-width: 560px;
+  }
+  .message-body p { margin-bottom: 14px; }
+  .message-body p:last-child { margin-bottom: 0; }
+
+  /* ── TEAM VIDEO ── */
+  .team-video {
+    margin-bottom: 56px;
+    opacity: 0;
+    animation: fadeUp 0.5s cubic-bezier(0.16,1,0.3,1) 0.22s forwards;
+  }
+  .team-video .section-label { margin-bottom: 14px; }
+  .video-wrapper {
+    position: relative;
+    padding-bottom: 56.25%;
+    height: 0;
+    overflow: hidden;
+    border-radius: 6px;
+    border: 0.5px solid var(--border);
+    background: var(--surface);
+  }
+  .video-wrapper iframe {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    border: 0;
+  }
+  /* Placeholder — remove when video is ready */
+  .video-placeholder {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+  }
+  .play-ring {
+    width: 56px; height: 56px;
+    border-radius: 50%;
+    border: 0.5px solid var(--border-em);
+    background: var(--surface-2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .placeholder-names {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--off-white);
+  }
+  .placeholder-sub {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: -8px;
+  }
+
+  /* ── REFERRAL NOTE ── */
+  .referral-note {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    padding: 18px 20px;
+    background: var(--surface);
+    border: 0.5px solid var(--border-em);
+    border-left: 2px solid var(--purple);
+    border-radius: 6px;
+    margin-bottom: 56px;
+    opacity: 0;
+    animation: fadeUp 0.5s cubic-bezier(0.16,1,0.3,1) 0.28s forwards;
+  }
+  .referral-note p { font-size: 13px; line-height: 1.65; color: var(--body-text); }
+  .referral-note strong { color: var(--off-white); font-weight: 600; }
+
+  /* ── SECTION LABEL ── */
+  .section-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--purple);
+    margin-bottom: 18px;
+  }
+
+  /* ── ACTION CARDS ── */
+  .actions-header {
+    margin-bottom: 14px;
+    opacity: 0;
+    animation: fadeUp 0.5s cubic-bezier(0.16,1,0.3,1) 0.32s forwards;
+  }
+  .actions {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    background: var(--border);
+    border: 0.5px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 16px;
+    opacity: 0;
+    animation: fadeUp 0.5s cubic-bezier(0.16,1,0.3,1) 0.35s forwards;
+  }
+  .action-card {
+    background: var(--surface);
+    padding: 20px 24px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 24px;
+    text-decoration: none;
+    color: inherit;
+    transition: background 180ms;
+  }
+  .action-card:hover { background: var(--surface-2); }
+  .action-card-tag {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 2px 8px;
+    border-radius: 3px;
+    border: 0.5px solid rgba(100,5,255,0.45);
+    color: var(--purple-lighter);
+    margin-bottom: 7px;
+  }
+  .action-card h3 {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--off-white);
+    line-height: 1.3;
+    margin-bottom: 3px;
+  }
+  .action-card p {
+    font-size: 13px;
+    color: var(--body-text);
+    line-height: 1.6;
+  }
+  .action-card-arrow {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    border: 0.5px solid var(--border-em);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: border-color 180ms, background 180ms;
+  }
+  .action-card:hover .action-card-arrow {
+    border-color: rgba(100,5,255,0.6);
+    background: rgba(100,5,255,0.10);
+  }
+  .action-card:hover .action-card-arrow path { stroke: var(--purple-lighter); }
+  .action-card-arrow path { stroke: var(--muted); transition: stroke 180ms; }
+
+  /* ── DIVIDER ── */
+  .divider {
+    border: none;
+    border-top: 0.5px solid var(--border);
+    margin: 56px 0;
+  }
+
+  /* ── CLIENT TESTIMONIALS VIDEO ── */
+  .video-section {
+    margin-bottom: 56px;
+    opacity: 0;
+    animation: fadeUp 0.5s cubic-bezier(0.16,1,0.3,1) 0.4s forwards;
+  }
+  .video-section .section-label { margin-bottom: 8px; }
+  .video-intro {
+    font-size: 13px;
+    color: var(--body-text);
+    line-height: 1.6;
+    margin-bottom: 18px;
+  }
+
+  /* ── UPSELL — comment out entire block to hide ── */
+  .upsell {
+    background: var(--surface);
+    border: 0.5px solid var(--border-em);
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 64px;
+    opacity: 0;
+    animation: fadeUp 0.5s cubic-bezier(0.16,1,0.3,1) 0.45s forwards;
+  }
+  .upsell-inner { padding: 28px 28px 24px; }
+  .upsell h2 {
+    font-size: 19px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    line-height: 1.25;
+    margin-bottom: 8px;
+    color: var(--off-white);
+  }
+  .upsell-inner > p {
+    font-size: 13px;
+    color: var(--body-text);
+    line-height: 1.7;
+    margin-bottom: 22px;
+    max-width: 520px;
+  }
+  .packs {
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    border: 0.5px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 22px;
+  }
+  @media (max-width: 560px) { .packs { grid-template-columns: repeat(2,1fr); } }
+  .pack {
+    padding: 14px 16px;
+    border-right: 0.5px solid var(--border);
+  }
+  .pack:last-child { border-right: none; }
+  .pack-name {
+    font-size: 10px; font-weight: 600;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--muted); margin-bottom: 6px;
+  }
+  .pack-credits { font-size: 16px; font-weight: 600; color: var(--off-white); margin-bottom: 2px; }
+  .pack-price { font-size: 11px; color: var(--body-text); margin-bottom: 6px; }
+  .pack-bonus { font-size: 11px; font-weight: 600; color: var(--purple-lighter); }
+  .upsell-actions { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--purple); color: #fff;
+    font-family: 'Fustat', sans-serif;
+    font-size: 13px; font-weight: 600;
+    padding: 10px 20px; border-radius: 5px;
+    text-decoration: none; border: none; cursor: pointer;
+    transition: background 180ms; letter-spacing: 0.01em;
+  }
+  .btn-primary:hover { background: var(--purple-light); }
+  .upsell-note { font-size: 12px; color: var(--muted); }
+  /* ── END UPSELL ── */
+
+  /* ── FOOTER ── */
+  .footer {
+    border-top: 0.5px solid var(--border);
+    padding-top: 28px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+    opacity: 0;
+    animation: fadeUp 0.5s cubic-bezier(0.16,1,0.3,1) 0.5s forwards;
+  }
+  .footer p { font-size: 12px; color: var(--muted); }
+  .footer a { font-size: 12px; color: var(--body-text); text-decoration: none; transition: color 180ms; }
+  .footer a:hover { color: var(--off-white); }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="site-header">
+    <svg width="207" height="60" viewBox="0 0 207 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <g clip-path="url(#a)">
+        <path d="M203.626 18.15C196.267 2.405 177.538-4.39 161.792 2.968L160.415.02C144.669 7.377 137.871 26.104 145.23 41.848c7.358 15.745 26.087 22.54 41.833 15.183l1.377 2.946C204.186 52.619 210.984 33.893 203.626 18.148zM181.567 45.276c-9.251 4.322-20.254.328-24.577-8.922-4.324-9.25-.328-20.252 8.921-24.574l1.377 2.945c9.252-4.323 20.254-.328 24.578 8.921 4.323 9.25.328 20.252-8.922 24.575z" fill="#F5F2EE"/>
+        <path d="M143.899 59.484 116.398 59.485H109.786v-.001h-1.607l-1.808-3.878-2.954-6.334V.502h12.981V46.506h21.45l5.184 11.119z" fill="#F5F2EE"/>
+        <path d="m78.258 15.855-7.162-15.355-7.16 15.356 1.387 2.974-7.151 15.334L46.365 59.48h14.321l4.647-9.962 7.15-15.334 11.796 25.295h14.32l.003-.001z" fill="#F5F2EE"/>
+        <path d="M43.741 40.83v.39c-.21 10.124-8.482 18.26-18.654 18.26H0l6.051-12.979h4.047v.005h15.368c1.566 0 2.984-.635 4.009-1.66 1.027-1.027 1.663-2.444 1.663-4.01 0-3.133-2.54-5.672-5.672-5.672h-.188c-.065-.002-.13-.003-.194-.003H20.407c-4.279 0-8.198-1.524-11.222-4.096C5.543 27.973 3.198 23.406 3.07 18.29c0-.073-.009-.37-.009-.447 0-4.79 1.94-9.124 5.079-12.262C11.279 2.443 15.615.502 20.403.5h25.441l-6.056 12.979H20.407a.498.498 0 0 0-.075.002h-.252c-1.205 0-2.298.488-3.087 1.279-.79.789-1.279 1.88-1.279 3.086 0 2.41 1.955 4.364 4.366 4.364h5.324c10.156.17 18.337 8.424 18.337 18.62z" fill="#F5F2EE"/>
+      </g>
+      <defs><clipPath id="a"><rect width="206.594" height="60" fill="#fff"/></clipPath></defs>
+    </svg>
+    <a href="https://salo.uk" class="header-link" target="_blank">salo.uk ↗</a>
+  </div>
+
+  <!-- PERSONAL MESSAGE -->
+  <div class="personal-message">
+    <div class="eyebrow">A personal note</div>
+    <h1>Kai, Kate — it's been<br>a real pleasure.</h1>
+    <div class="message-body">
+      <p>Working on Provenant's brand and website has been one of those projects we genuinely look forward to showing people. You came in with a clear sense of what Provenant stands for, and that made it possible to do something worth being proud of.</p>
+      <p>Thank you for trusting us with it, for being great to work with, and for giving us the room to do our best work. That combination is rarer than it should be.</p>
+      <p>We've put together a short message below. And if you have a few minutes, there are a couple of ways you can help us reach more clients like you.</p>
+    </div>
+  </div>
+
+  <!-- TEAM VIDEO -->
+  <!-- TO ACTIVATE: replace the .video-placeholder div with an iframe:
+       <iframe src="https://player.vimeo.com/video/YOUR_VIDEO_ID?badge=0&autopause=0"
+         allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
+         title="A message from Carl and Toby"></iframe>
+  -->
+  <div class="team-video">
+    <div class="section-label">A message from Carl &amp; Toby</div>
+    <div class="video-wrapper">
+      <div class="video-placeholder">
+        <div class="play-ring">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+            <path d="M6 4.5L13.5 9L6 13.5V4.5Z" fill="#A16BFF"/>
+          </svg>
+        </div>
+        <div class="placeholder-names">Carl &amp; Toby</div>
+        <div class="placeholder-sub">Message coming shortly</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- REFERRAL NOTE -->
+  <div class="referral-note">
+    <p><strong>Most of our clients come through referrals.</strong> No advertising, no cold outreach. Just people we have worked with recommending us to someone they trust. If you know anyone who could use a design partner, an introduction means more to us than any campaign.</p>
+  </div>
+
+  <!-- THREE ACTIONS -->
+  <div class="actions-header">
+    <div class="section-label">Three ways to help</div>
+  </div>
+  <div class="actions">
+
+    <a href="RIVERSIDE_LINK_HERE" target="_blank" class="action-card">
+      <div class="action-card-body">
+        <div class="action-card-tag">Video</div>
+        <h3>Record a quick testimonial</h3>
+        <p>Two minutes on camera. Tell us what you were working on, what changed, and whether you would recommend us. We use Riverside — simple to record from your browser, no download needed.</p>
+      </div>
+      <div class="action-card-arrow">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7H12M12 7L8 3M12 7L8 11" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+    </a>
+
+    <a href="GOOGLE_REVIEW_LINK_HERE" target="_blank" class="action-card">
+      <div class="action-card-body">
+        <div class="action-card-tag">Review</div>
+        <h3>Leave a Google review</h3>
+        <p>A sentence or two about working with us goes a long way. It helps the right kind of businesses find us and takes less than a minute.</p>
+      </div>
+      <div class="action-card-arrow">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7H12M12 7L8 3M12 7L8 11" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+    </a>
+
+    <a href="mailto:hello@salo.uk?subject=Introduction" class="action-card">
+      <div class="action-card-body">
+        <div class="action-card-tag">Referral</div>
+        <h3>Introduce us to someone</h3>
+        <p>If you know a brand or business that needs proper design thinking applied, we would love an introduction. Even a LinkedIn message is enough to get a conversation started.</p>
+      </div>
+      <div class="action-card-arrow">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7H12M12 7L8 3M12 7L8 11" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+    </a>
+
+  </div>
+
+  <hr class="divider">
+
+  <!-- CLIENT TESTIMONIALS VIDEO -->
+  <div class="video-section">
+    <div class="section-label">Hear from other clients</div>
+    <p class="video-intro">Not sure what to say? Here is what working with us looks like from the other side.</p>
+    <div class="video-wrapper">
+      <iframe src="https://player.vimeo.com/video/salocreative/testimonials?badge=0&autopause=0&player_id=0&app_id=58479" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media" title="Salo — Client Testimonials"></iframe>
+    </div>
+  </div>
+
+  <!-- FLEXI-DESIGN UPSELL -->
+  <!-- To hide: comment from here... -->
+  <div class="upsell">
+    <div class="upsell-inner">
+      <div class="section-label">Keep the momentum going</div>
+      <h2>Need ongoing design support? Flexi-Design has you covered.</h2>
+      <p>Whether it is campaign assets, social content, or the next thing on the list — our credit-based model gives you instant access to the full Salo team whenever you need it. No retainer, no overhead.</p>
+      <div class="packs">
+        <div class="pack">
+          <div class="pack-name">Essentials</div>
+          <div class="pack-credits">20 credits</div>
+          <div class="pack-price">£1,800 ex VAT</div>
+          <div class="pack-bonus">+ 2 bonus credits</div>
+        </div>
+        <div class="pack">
+          <div class="pack-name">Momentum</div>
+          <div class="pack-credits">40 credits</div>
+          <div class="pack-price">£3,420 ex VAT</div>
+          <div class="pack-bonus">+ 5 bonus credits</div>
+        </div>
+        <div class="pack">
+          <div class="pack-name">Scale</div>
+          <div class="pack-credits">60 credits</div>
+          <div class="pack-price">£4,860 ex VAT</div>
+          <div class="pack-bonus">+ 8 bonus credits</div>
+        </div>
+        <div class="pack">
+          <div class="pack-name">Ultimate</div>
+          <div class="pack-credits">80 credits</div>
+          <div class="pack-price">£6,120 ex VAT</div>
+          <div class="pack-bonus">+ 10 bonus credits</div>
+        </div>
+      </div>
+      <div class="upsell-actions">
+        <a href="mailto:hello@salo.uk?subject=Flexi-Design enquiry" class="btn-primary">
+          Find out more
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7H12M12 7L8 3M12 7L8 11" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <span class="upsell-note">Mention this page and we'll add your bonus credits automatically.</span>
+      </div>
+    </div>
+  </div>
+  <!-- ...to here -->
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <p>Questions? <a href="mailto:hello@salo.uk">hello@salo.uk</a></p>
+    <a href="https://salo.uk" target="_blank">salo.uk</a>
+  </div>
+
+</div>
+</body>
+</html>

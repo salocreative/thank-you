@@ -1,0 +1,17 @@
+/** Shared links and defaults used across thank-you pages */
+
+export const RIVERSIDE_LINK = 'RIVERSIDE_LINK_HERE';
+export const GOOGLE_REVIEW_LINK = 'GOOGLE_REVIEW_LINK_HERE';
+
+export const TESTIMONIALS_VIMEO_URL =
+  'https://player.vimeo.com/video/salocreative/testimonials?badge=0&autopause=0&player_id=0&app_id=58479';
+
+export const DEFAULT_REFERRAL_ACTION_DESCRIPTION =
+  'If you know an agency or brand that is struggling with design capacity, we would love an introduction. Even a LinkedIn message or a CC on an email is enough to get a conversation started.';
+
+export const DEFAULT_UPSELL = {
+  heading: 'Liked how that felt? Flexi-Design keeps it going.',
+  description:
+    'Our credit-based model gives you instant access to the full Salo team whenever you need design work done. No retainer, no hiring, no starting from scratch with a freelancer. Just brief us and we get started.',
+  buttonText: 'Get started',
+};

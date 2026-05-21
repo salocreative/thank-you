@@ -1,0 +1,28 @@
+---
+import Base from '../layouts/Base.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import ReferralNote from '../components/ReferralNote.astro';
+import ActionCards from '../components/ActionCards.astro';
+import TestimonialVideo from '../components/TestimonialVideo.astro';
+import UpsellBlock from '../components/UpsellBlock.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Base title="Thank you — Salo">
+  <SiteHeader />
+
+  <div class="hero">
+    <div class="eyebrow">Project complete</div>
+    <h1>Thanks for working<br>with us.</h1>
+    <p>We genuinely enjoy the work we do, and that is only possible because of clients like you. If you have a moment, there are a few ways you can help us do more of it.</p>
+  </div>
+
+  <ReferralNote />
+  <ActionCards />
+
+  <hr class="divider" />
+
+  <TestimonialVideo />
+  <UpsellBlock />
+  <Footer />
+</Base>
