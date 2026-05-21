@@ -4,8 +4,8 @@ import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://salocreative.github.io',
-  base: '/thank-you',
+  site: 'https://thankyou.salo.uk',
+  base: '/',
   output: 'static',
   integrations: [sitemap()],
 });
