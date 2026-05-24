@@ -1,7 +1,8 @@
 /** Shared links and defaults used across thank-you pages */
 
-export const RIVERSIDE_LINK = 'RIVERSIDE_LINK_HERE';
-export const GOOGLE_REVIEW_LINK = 'GOOGLE_REVIEW_LINK_HERE';
+export const TESTIMONIAL_SCHEDULE_LINK = 'https://cal.com/carlcahill/review';
+export const GOOGLE_REVIEW_LINK =
+  'https://g.page/r/CUmsD40nWQkoEAE/review';
 
 export const TESTIMONIALS_VIMEO_URL =
   'https://player.vimeo.com/video/1170350821?h=3dc29a7f08&badge=0&autopause=0&byline=0&portrait=0&title=0';

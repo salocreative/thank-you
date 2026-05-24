@@ -116,7 +116,7 @@ Run [`supabase/migrations/20260521_add_team_video_presenters.sql`](supabase/migr
 
 Update placeholder URLs in `src/data/site.ts`:
 
-- `RIVERSIDE_LINK` — Riverside testimonial recording link
+- `TESTIMONIAL_SCHEDULE_LINK` — Cal.com booking link for testimonial recordings
 - `GOOGLE_REVIEW_LINK` — Google review URL
 
 ## Supabase (admin portal)
