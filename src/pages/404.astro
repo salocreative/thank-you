@@ -1,0 +1,20 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base title="Page not found — Salo">
+  <script is:inline>
+    (function () {
+      var path = window.location.pathname;
+      if (path === '/thank-you' || path.indexOf('/thank-you/') === 0) {
+        window.location.replace(path.replace(/^\/thank-you/, '') || '/');
+      }
+    })();
+  </script>
+
+  <div class="hero">
+    <div class="eyebrow">404</div>
+    <h1>Page not found.</h1>
+    <p>This thank-you page does not exist, or it has not been published yet.</p>
+  </div>
+</Base>

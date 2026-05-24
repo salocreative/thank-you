@@ -2,10 +2,9 @@
 
 Post-project thank you pages for Salo clients, built with [Astro](https://astro.build) and deployed as a static site to GitHub Pages.
 
-**Live URLs**
+**Live URL:** [https://thankyou.salo.uk](https://thankyou.salo.uk)
 
-- GitHub Pages: [https://salocreative.github.io/thank-you](https://salocreative.github.io/thank-you)
-- Custom domain (optional): [https://thanks.salo.uk](https://thanks.salo.uk)
+Personalised pages live at `https://thankyou.salo.uk/{slug}` — e.g. [https://thankyou.salo.uk/src](https://thankyou.salo.uk/src).
 
 ## Project structure
 
@@ -40,7 +39,7 @@ npm install
 npm run dev
 ```
 
-Open [http://localhost:4321/thank-you](http://localhost:4321/thank-you) — the `/thank-you` base path matches production.
+Open [http://localhost:4321](http://localhost:4321) — matches the production custom domain setup.
 
 ## Building
 
@@ -57,24 +56,11 @@ Output is written to `dist/`.
 2. In repo **Settings → Pages**, set source to **GitHub Actions**.
 3. Push to `main` — the workflow in `.github/workflows/deploy.yml` builds and deploys automatically.
 
-The site is configured with `base: '/thank-you'` in `astro.config.mjs` for project-page hosting at `salocreative.github.io/thank-you`.
+The site is configured with `site: 'https://thankyou.salo.uk'` and `base: '/'` in `astro.config.mjs`.
 
-### Custom subdomain (`thanks.salo.uk`)
+### Custom domain
 
-1. Add a `CNAME` record pointing `thanks.salo.uk` to `salocreative.github.io`.
-2. In GitHub repo **Settings → Pages → Custom domain**, enter `thanks.salo.uk`.
-3. Update `astro.config.mjs` for root hosting:
-
-   ```js
-   export default defineConfig({
-     site: 'https://thanks.salo.uk',
-     base: '/',
-     output: 'static',
-     integrations: [sitemap()],
-   });
-   ```
-
-4. Rebuild and redeploy.
+The `CNAME` file in `public/` sets the GitHub Pages custom domain to `thankyou.salo.uk`. Configure the DNS `CNAME` record pointing to `salocreative.github.io`.
 
 ## Adding a personalised client page
 
@@ -84,7 +70,9 @@ Pages are managed in the **admin portal** (Supabase `thank_you_clients` table). 
 
 1. Create the page in the admin portal and set **Published** to on.
 2. Trigger a rebuild (push to `main`, or run **Actions → Deploy to GitHub Pages → Run workflow**).
-3. The page goes live at `/thank-you/{slug}` (e.g. `/thank-you/src`).
+3. The page goes live at `https://thankyou.salo.uk/{slug}` (e.g. `/src`).
+
+> **Note:** Old URLs with a `/thank-you/` prefix (from the initial GitHub Pages setup) redirect automatically to the root path.
 
 If a page 404s, it usually means one of:
 
@@ -102,7 +90,7 @@ If a page 404s, it usually means one of:
    npm run preview
    ```
 
-3. Open [http://localhost:4321/thank-you/src](http://localhost:4321/thank-you/src) (replace `src` with your slug).
+3. Open [http://localhost:4321/src](http://localhost:4321/src) (replace `src` with your slug).
 
 During `npm run dev`, Astro still pre-renders static paths at startup — restart the dev server after adding a new client.
 
@@ -156,7 +144,7 @@ If you prefer the anon key instead, run [`supabase/policies.sql`](supabase/polic
 
 ## Sitemap
 
-`@astrojs/sitemap` is enabled. After deploy, the sitemap is available at `/thank-you/sitemap-index.xml` (or `/sitemap-index.xml` on a custom domain).
+`@astrojs/sitemap` is enabled. After deploy, the sitemap is at `/sitemap-index.xml`.
 
 ## Original HTML
 
