@@ -1,4 +1,6 @@
 ---
+import { Star, UserPlus, Video } from 'lucide';
+import LucideIcon from './LucideIcon.astro';
 import {
   TESTIMONIAL_SCHEDULE_LINK,
   GOOGLE_REVIEW_LINK,
@@ -10,44 +12,56 @@ interface Props {
 }
 
 const { referralDescription = DEFAULT_REFERRAL_ACTION_DESCRIPTION } = Astro.props;
+
+const actions = [
+  {
+    href: TESTIMONIAL_SCHEDULE_LINK,
+    external: true,
+    icon: Video,
+    title: 'Record a quick testimonial',
+    description:
+      'Two minutes on camera. Tell us what you were working on, what changed, and whether you would recommend us. Book a slot below and we will send you everything you need.',
+  },
+  {
+    href: GOOGLE_REVIEW_LINK,
+    external: true,
+    icon: Star,
+    title: 'Leave a Google review',
+    description:
+      'A sentence or two about working with us goes a long way. It helps the right kind of businesses find us and takes less than a minute.',
+  },
+  {
+    href: 'mailto:hello@salo.uk?subject=Introduction',
+    external: false,
+    icon: UserPlus,
+    title: 'Introduce us to someone',
+    description: referralDescription,
+  },
+];
 ---
 
 <div class="actions-header">
   <div class="section-label">Three ways to help</div>
 </div>
 <div class="actions">
-
-  <a href={TESTIMONIAL_SCHEDULE_LINK} target="_blank" class="action-card">
-    <div class="action-card-body">
-      <div class="action-card-tag">Video</div>
-      <h3>Record a quick testimonial</h3>
-      <p>Two minutes on camera. Tell us what you were working on, what changed, and whether you would recommend us. Book a slot below and we will send you everything you need.</p>
-    </div>
-    <div class="action-card-arrow">
-      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7H12M12 7L8 3M12 7L8 11" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    </div>
-  </a>
-
-  <a href={GOOGLE_REVIEW_LINK} target="_blank" class="action-card">
-    <div class="action-card-body">
-      <div class="action-card-tag">Review</div>
-      <h3>Leave a Google review</h3>
-      <p>A sentence or two about working with us goes a long way. It helps the right kind of businesses find us and takes less than a minute.</p>
-    </div>
-    <div class="action-card-arrow">
-      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7H12M12 7L8 3M12 7L8 11" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    </div>
-  </a>
-
-  <a href="mailto:hello@salo.uk?subject=Introduction" class="action-card">
-    <div class="action-card-body">
-      <div class="action-card-tag">Referral</div>
-      <h3>Introduce us to someone</h3>
-      <p>{referralDescription}</p>
-    </div>
-    <div class="action-card-arrow">
-      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7H12M12 7L8 3M12 7L8 11" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    </div>
-  </a>
-
+  {actions.map((action) => (
+    <a
+      href={action.href}
+      target={action.external ? '_blank' : undefined}
+      class="action-card"
+    >
+      <div class="action-card-body">
+        <div class="action-card-title-row">
+          <span class="action-card-icon">
+            <LucideIcon icon={action.icon} size={22} />
+          </span>
+          <h3>{action.title}</h3>
+        </div>
+        <p>{action.description}</p>
+      </div>
+      <div class="action-card-arrow">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7H12M12 7L8 3M12 7L8 11" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+    </a>
+  ))}
 </div>

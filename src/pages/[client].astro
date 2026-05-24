@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import SiteHeader from '../components/SiteHeader.astro';
+import TeamPhoto from '../components/TeamPhoto.astro';
 import TeamVideo from '../components/TeamVideo.astro';
 import ReferralNote from '../components/ReferralNote.astro';
 import ActionCards from '../components/ActionCards.astro';
@@ -32,6 +33,7 @@ const paragraphs = Array.isArray(client.personalMessage)
 
 <Base title={`Thank you, ${client.clientName} — Salo`}>
   <SiteHeader />
+  <TeamPhoto />
 
   <div class="personal-message">
     <div class="eyebrow">A personal note</div>
