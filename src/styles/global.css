@@ -81,7 +81,7 @@ body::before {
   font-weight: 600;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--purple);
+  color: var(--body-text);
   margin-bottom: 18px;
 }
 .hero h1 {
@@ -201,7 +201,7 @@ body::before {
   font-weight: 600;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--purple);
+  color: var(--body-text);
   margin-bottom: 18px;
 }
 
