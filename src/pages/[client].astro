@@ -31,7 +31,10 @@ const paragraphs = Array.isArray(client.personalMessage)
   : [client.personalMessage];
 ---
 
-<Base title={`Thank you, ${client.clientName} — Salo`}>
+<Base
+  title={`Thank you, ${client.clientName} — Salo`}
+  description={`A personal thank you from Salo to ${client.recipientNames}.`}
+>
   <SiteHeader />
   <TeamPhoto />
 
