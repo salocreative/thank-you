@@ -14,5 +14,9 @@ export const DEFAULT_UPSELL = {
   heading: 'Liked how that felt? Flexi-Design keeps it going.',
   description:
     'Our credit-based model gives you instant access to the full Salo team whenever you need design work done. No retainer, no hiring, no starting from scratch with a freelancer. Just brief us and we get started.',
-  buttonText: 'Get started',
+  buttonText: 'Find out more',
 };
+
+export const FLEXI_DESIGN_DECK_LINK =
+  'https://www.figma.com/deck/OHSEUS8AcQ8iUUfSDCI5Yz';
+export const FLEXI_DESIGN_BOOKING_LINK = 'https://cal.com/carlcahill/flexi-design';

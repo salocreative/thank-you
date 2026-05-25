@@ -1,5 +1,9 @@
 ---
-import { DEFAULT_UPSELL } from '../data/site';
+import {
+  DEFAULT_UPSELL,
+  FLEXI_DESIGN_BOOKING_LINK,
+  FLEXI_DESIGN_DECK_LINK,
+} from '../data/site';
 
 interface Props {
   heading?: string;
@@ -46,9 +50,13 @@ const {
       </div>
     </div>
     <div class="upsell-actions">
-      <a href="mailto:hello@salo.uk?subject=Flexi-Design enquiry" class="btn-primary">
+      <a href={FLEXI_DESIGN_DECK_LINK} target="_blank" class="btn-primary">
         {buttonText}
         <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7H12M12 7L8 3M12 7L8 11" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <a href={FLEXI_DESIGN_BOOKING_LINK} target="_blank" class="btn-secondary">
+        Book a call
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7H12M12 7L8 3M12 7L8 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </a>
       <span class="upsell-note">Mention this page and we'll add your bonus credits automatically.</span>
     </div>
